@@ -22,7 +22,7 @@ from towers.penguin import PenguinTower
 from menu.menu import VerticalMenu
 
 # Tower Name
-tower_name = ["Monkey", "Penguin", "Turtle"]
+tower_name = ["Chimchar", "Penguin", "Turtle"]
 
 # Game Atribute Images
 lives_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "heart.png")), (50, 50))
@@ -115,7 +115,7 @@ class Game:
 
         # Vertical Menu
         self.menu = VerticalMenu(1060 , 350,vert_menu)
-        self.menu.add_btn(monkey, "Monkey", 500)
+        self.menu.add_btn(monkey, "Chimchar", 500)
         self.menu.add_btn(penguin, "Penguin", 500)
         self.menu.add_btn(turtle, "Turtle", 500)
         self.moving_object = None
@@ -294,7 +294,7 @@ class Game:
 
     def add_tower(self, name):
         x, y = pygame.mouse.get_pos()
-        name_list = ["Monkey", "Penguin", "Turtle"]
+        name_list = ["Chimchar", "Penguin", "Turtle"]
         object_list = [MonkeyTower(x,y), PenguinTower(x,y), TurtleTower(x,y)]
 
         try:

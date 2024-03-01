@@ -3,17 +3,21 @@ import os
 from .enemy import Enemy
 #import enemy_sprites
 
-imgs = []
-for x in range(2):
-    add_str = str(x)    
-    imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assests/enemies", "bird_"+add_str+".png")),(64,64)))
+# Preload images
+bird_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("game_assests/enemies", f"bird_{x}.png")),(64,64)) for x in range(2)]
 
 class Bird(Enemy):
+    # Class attribute for images
+    imgs = bird_imgs
 
     def __init__(self):
         super().__init__()
-        self.name = "Bird"
+        self.name = "Starely"
         self.health = 10
         self.max_health = self.health
-        self.imgs = imgs[:]
+        # Reuse class attribute instead of creating a copy
+        self.imgs = Bird.imgs[:]
         self.money = 10
+
+
+# I want to add more bird enemies (the evoluitions of starley)
