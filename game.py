@@ -259,25 +259,23 @@ class Game:
                         event = pygame.event.wait()
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                             break
-
+                        
                 to_del = []
                 for en in self.enemys:
                     en.move(dt)
-                    if en.y < -25:
+                    if en.y < -25 or en.path_pos >= len(en.path) - 1:  # Check if enemy is off-screen or has reached the end of the path
                         to_del.append(en)
-                    elif en.path_pos >= len(en.path):  # Check if enemy has reached the end of the path
-                        to_del.append(en)
-                        self.lives -= 1  # Deduct player's health
 
-                # delete all enemies off screen
+                # Remove enemies from the list
                 for d in to_del:
-                    self.lives -= 1
+                    self.lives -= d.health  # Deduct player's health for each enemy reaching the end of the path
                     self.enemys.remove(d)
 
                 # Lose
                 if self.lives <= 0:
                     print("You Lose")
                     run = False
+
 
             self.draw(dt)
 

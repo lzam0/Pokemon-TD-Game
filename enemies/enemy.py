@@ -27,7 +27,6 @@ class Enemy:
         self.dis = 0
         
         self.img = [] 
-        self.flipped = False
 
     def draw(self, win, dt): # Draw Enemy with given images
 
