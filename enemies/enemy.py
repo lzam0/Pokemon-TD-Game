@@ -20,7 +20,7 @@ class Enemy:
         self.vel = 1.2
 
         # path | list of points on the map
-        self.path = [(95, 310),(545, 310), (545, 475), (355, 475), (355, 200), (540, 200), (675, 200),(675, 475),(975, 475), (975, 310),(975, -35)]
+        self.path = [(95, 310),(545, 310), (545, 475), (355, 475), (355, 200), (540, 200), (675, 200),(675, 475),(975, 475), (975, 310),(975, 0)]
         self.x = self.path[0][0]
         self.y = self.path[0][1]
         self.path_pos = 0
@@ -66,7 +66,7 @@ class Enemy:
         return False
 
     def move(self, dt):  # moving algorithm for enemy with delta time (dt)
-        if self.path_pos >= len(self.path):
+        if self.path_pos >= len(self.path) - 1:  # Check if the enemy has reached the last point in the path
             # Enemy has reached the end of the path, stop moving
             return False
 
@@ -86,20 +86,18 @@ class Enemy:
         self.y = move_y
 
         # Check if the enemy has reached the next point
-        if dirn[0] >= 0:  # moving right
-            if dirn[1] >= 0:  # moving down
-                if self.x >= x2 and self.y >= y2:
-                    self.path_pos += 1  # move to the next path position
-            else:  # moving up
-                if self.x >= x2 and self.y <= y2:
-                    self.path_pos += 1
-        else:  # moving left
-            if dirn[1] >= 0:  # moving down
-                if self.x <= x2 and self.y >= y2:
-                    self.path_pos += 1
-            else:  # moving up
-                if self.x <= x2 and self.y >= y2:
-                    self.path_pos += 1
+        if dirn[0] > 0:  # moving right
+            if self.x >= x2:
+                self.path_pos += 1  # move to the next path position
+        elif dirn[0] < 0:  # moving left
+            if self.x <= x2:
+                self.path_pos += 1
+        if dirn[1] > 0:  # moving down
+            if self.y >= y2:
+                self.path_pos += 1
+        elif dirn[1] < 0:  # moving up
+            if self.y <= y2:
+                self.path_pos += 1
 
         # Ensure path_pos is within valid range
         if self.path_pos >= len(self.path):
