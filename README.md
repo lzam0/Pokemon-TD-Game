@@ -16,3 +16,8 @@ Wave-based Challenges: Face increasingly challenging waves of enemy Pokemon as y
 Upgradeable Towers: Earn in-game currency by defeating enemy waves and use it to upgrade your Pokemon towers. Enhance their abilities, unlock new attacks, and evolve them into powerful defenders.
 
 User Interface: Enjoy a user-friendly interface that provides essential information such as tower statistics, enemy wave details, and in-game currency status. Intuitive controls make it easy for players to navigate and interact with the game.
+
+![image](https://github.com/lzam0/Pokemon-TD-Game/assets/110193626/0cfc3f3b-87f1-4125-bf86-6bb155a293d4)
+
+Sprites are from the original generation 4 game
+Map was designed by me
