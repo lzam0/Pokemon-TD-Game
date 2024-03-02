@@ -22,7 +22,7 @@ from towers.penguin import PenguinTower
 from menu.menu import VerticalMenu
 
 # Tower Name
-tower_name = ["Chimchar", "Piplup", "Turtwig"]
+tower_name = ["Chimchar", "Piplup", "Turtle"]
 
 # Game Atribute Images
 lives_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "heart.png")), (50, 50))
@@ -145,7 +145,7 @@ class Game:
         fps = pygame.time.Clock()
         run = True
         while run:
-            fps.tick(FPS)  # frame rate
+            dt = fps.tick(FPS) / 1000.0  # Convert milliseconds to seconds and get delta time
 
             # Generate Enemies
             if self.pause != False:
@@ -159,7 +159,7 @@ class Game:
 
             # Check For moving Object
             if self.moving_object:
-                self.moving_object.move(pos[0], pos[1])
+                self.moving_object.move(pos[0], pos[1], dt)
 
             # Event Handler 
             for event in pygame.event.get():
@@ -226,11 +226,19 @@ class Game:
                             break
 
                 # Loop through enemies
+                # to_del = []
+                # for en in self.enemys:
+                #     en.move(dt)
+                #     if en.y < -25:
+                #         to_del.append(en)
                 to_del = []
                 for en in self.enemys:
-                    en.move()
+                    en.move(dt)
                     if en.y < -25:
                         to_del.append(en)
+                    elif en.path_pos >= len(en.path):  # Check if enemy has reached the end of the path
+                        to_del.append(en)
+                        self.lives -= 1  # Deduct player's health
 
                 # delete all enemies off screen
                 for d in to_del:
@@ -242,13 +250,13 @@ class Game:
                     print("You Lose")
                     run = False
 
-            self.draw()
+            self.draw(dt)
 
             pygame.display.update()
 
         pygame.quit()
     
-    def draw(self):
+    def draw(self, dt):
         self.win.blit(self.bg, (0,0)) # BG
         
         #Used to get the position for enemy pathway
@@ -257,7 +265,7 @@ class Game:
     
         # draw enemy
         for en in self.enemys:
-            en.draw(self.win)
+            en.draw(self.win, dt)
 
         # draw towers
         for tw in self.towers:

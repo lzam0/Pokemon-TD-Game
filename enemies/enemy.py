@@ -29,7 +29,7 @@ class Enemy:
         self.img = [] 
         self.flipped = False
 
-    def draw(self, win): # Draw Enemy with given images
+    def draw(self, win, dt): # Draw Enemy with given images
 
         self.img = self.imgs[self.animation_count]
         now = pygame.time.get_ticks()
@@ -45,7 +45,7 @@ class Enemy:
             pygame.draw.circle(win, (255,0,0), dot, 10, 0)
         """
         win.blit(self.img, (self.x - self.img.get_width()/2 , self.y - self.img.get_height()/2))
-        self.move()
+        self.move(dt)
         self.draw_health(win)
 
     def draw_health(self, win): # Draw health above enemy
@@ -65,7 +65,7 @@ class Enemy:
                 return True
         return False
 
-    def move(self): # moving algorithm for enemy
+    def move(self, dt):  # moving algorithm for enemy with delta time (dt)
         if self.path_pos >= len(self.path):
             # Enemy has reached the end of the path, stop moving
             return False
@@ -74,11 +74,11 @@ class Enemy:
         if self.path_pos + 1 >= len(self.path):
             x2, y2 = (975, -25)
         else:
-            x2, y2 = self.path[self.path_pos+1]
+            x2, y2 = self.path[self.path_pos + 1]
 
-        dirn = ((x2-x1)*2, (y2-y1)*2)
-        length = math.sqrt((dirn[0])**2 + (dirn[1])**2)
-        dirn = (dirn[0]/length, dirn[1]/length)
+        dirn = ((x2 - x1) * 2, (y2 - y1) * 2)
+        length = math.sqrt(dirn[0] ** 2 + dirn[1] ** 2)
+        dirn = (dirn[0] / length, dirn[1] / length)
 
         move_x, move_y = ((self.x + dirn[0]), (self.y + dirn[1]))
 
@@ -86,21 +86,24 @@ class Enemy:
         self.y = move_y
 
         # Check if the enemy has reached the next point
-        if dirn[0] >= 0: # moving right
-            if dirn[1] >= 0: # moving down
+        if dirn[0] >= 0:  # moving right
+            if dirn[1] >= 0:  # moving down
                 if self.x >= x2 and self.y >= y2:
-                    self.path_pos += 1 # move to the next path position
-            else:# moving up
+                    self.path_pos += 1  # move to the next path position
+            else:  # moving up
                 if self.x >= x2 and self.y <= y2:
                     self.path_pos += 1
-
-        else: # moving left
+        else:  # moving left
             if dirn[1] >= 0:  # moving down
                 if self.x <= x2 and self.y >= y2:
                     self.path_pos += 1
-            else:# moving up
+            else:  # moving up
                 if self.x <= x2 and self.y >= y2:
                     self.path_pos += 1
+
+        # Ensure path_pos is within valid range
+        if self.path_pos >= len(self.path):
+            self.path_pos = len(self.path) - 1
 
         return True
 

@@ -14,5 +14,5 @@ BLUE = (0, 0, 255)
 # Screen Size
 WIDTH = 1200
 HEIGHT = 700
-FPS = 60
+FPS = 120
 TITLE = "Pokemon Tower Defence"
