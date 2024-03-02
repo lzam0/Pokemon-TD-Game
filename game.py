@@ -224,15 +224,18 @@ class Game:
                                     print("Current Money:", self.money)  # Debug print
                                     print("Upgrade Cost:", cost)  # Debug print
 
-                                    if self.money >= int(cost):
-                                        self.money -= cost # deduct money for upgrade
-                                        print("Money After Upgrade:", self.money)  # Debug print
+                                    if self.selected_tower.level <= 2:
+                                        if self.money >= int(cost):
+                                            self.money -= cost # deduct money for upgrade
+                                            print("Money After Upgrade:", self.money)  # Debug print
 
-                                        print("Tower Upgraded | Level:", self.selected_tower.level)
-                                        self.selected_tower.upgrade() # upgrade tower 
+                                            print("Tower Upgraded | Level:", self.selected_tower.level)
+                                            self.selected_tower.upgrade() # upgrade tower 
+                                        else:
+                                            print("Upgrade Declined")
+                                            print("Balance Insufficient...")
                                     else:
-                                        print("Upgrade Declined")
-                                        print("Balance Insufficient...")
+                                        print("Fully Upgraded")
 
                             if not(btn_clicked):
                                 for tw in self.towers:
