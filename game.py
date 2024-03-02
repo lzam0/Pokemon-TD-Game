@@ -22,7 +22,7 @@ from towers.penguin import PenguinTower
 from menu.menu import VerticalMenu
 
 # Tower Name
-tower_name = ["Chimchar", "Piplup", "Turtle"]
+tower_name = ["Chimchar", "Piplup", "Turtwig"]
 
 # Game Atribute Images
 lives_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "heart.png")), (50, 50))
@@ -101,7 +101,7 @@ class Game:
 
         # Game Attributes
         self.lives = 100
-        self.money = 1000
+        self.money = 10000
 
         # Background
         self.img = pygame.image.load(os.path.join("game_assests","bg.png"))
@@ -114,11 +114,11 @@ class Game:
         self.selected_tower = None
 
         # Vertical Menu
+        self.moving_object = None
         self.menu = VerticalMenu(1060 , 350,vert_menu)
         self.menu.add_btn(monkey, "Chimchar", 500)
         self.menu.add_btn(penguin, "Piplup", 500)
-        self.menu.add_btn(turtle, "Turtwig", 500)
-        self.moving_object = None
+        self.menu.add_btn(turtle, "Turtwig", 200)
 
         # Waves
         self.wave = 0
@@ -159,31 +159,57 @@ class Game:
 
             # Check For moving Object
             if self.moving_object:
-                self.moving_object.move(pos[0], pos[1], dt)
+                self.moving_object.move(pos[0], pos[1])
+                collide = False
+                for tower in self.towers:
+                    if tower.collide(self.moving_object):
+                        collide = True
+                        tower.place_color = (255, 0, 0, 100)
+                        self.moving_object.place_color = (255, 0, 0, 100)
+                        break  # Exit the loop early if collision detected
+                
+                if not collide:
+                    for tower in self.towers:
+                        tower.place_color = (0, 0, 255, 100)  # Set place_color for each tower
+                    self.moving_object.place_color = (0, 0, 255, 100)
+
+                        
+
 
             # Event Handler 
             for event in pygame.event.get():
+                side_menu_button = self.menu.get_clicked(pos[0], pos[1])
                 if event.type == pygame.QUIT:
                     run = False
                     quit()
-
+                
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     # If Moving an object and click
                     if self.moving_object:
                         if self.moving_object.name in tower_name:
-                            self.towers.append(self.moving_object)
-
+                            not_allowed = False  # Flag to track if placement is allowed
+                            for tower in self.towers:
+                                if tower.collide(self.moving_object):
+                                    not_allowed = True
+                                    break  # Exit the loop early if collision detected
+                            
+                            if not not_allowed:  # Only add the tower if placement is allowed
+                                self.towers.append(self.moving_object)
+                            else:
+                                # return money if placement isn't possible
+                                print(side_menu_button, "cannot be placed")
+                                self.money += cost
 
                         self.moving_object.moving = False
                         self.moving_object = None
 
                     else:
                         # Clicked on Buy Menu
-                        side_menu_button = self.menu.get_clicked(pos[0], pos[1])
                         if side_menu_button:
                             cost = self.menu.get_item_cost(side_menu_button)
+                            # if player has enough money
                             if self.money >= cost:
-                                self.money -= cost
+                                self.money -= cost # deduct money for placement
                                 print(side_menu_button, "purchased")
                                 self.add_tower(side_menu_button)
 
@@ -193,13 +219,17 @@ class Game:
                         if self.selected_tower:
                             btn_clicked = self.selected_tower.menu.get_clicked(pos[0], pos[1])
                             if btn_clicked:
-                                if btn_clicked == "Upgrade":
+                                if btn_clicked == "Upgrade": # purchase an upgrade
                                     cost = self.selected_tower.get_upgrade_cost()
-                                    print("Upgrade Cost",cost)
+
                                     if self.money >= cost:
-                                        self.money -= cost # fix get upgrade cost method
+                                        self.money -= cost # deduct money for upgrade
                                         print("Tower Upgraded | Level:", self.selected_tower.level)
-                                        self.selected_tower.upgrade()
+                                        print("Upgrade Cost:", cost) # somehow charges player 500??? need to fix should be the next value 
+                                        self.selected_tower.upgrade() # upgrade tower 
+                                    else:
+                                        print("Upgrade Declined")
+                                        print("Balance Insufficent...")
 
                             if not(btn_clicked):
                                 for tw in self.towers:
@@ -214,7 +244,7 @@ class Game:
                             if tw.click(pos[0], pos[1]):
                                 tw.selected = True
                                 self.selected_tower = tw
-                                print("Tower", self.selected_tower.name, "is selected  ")
+                                print("Tower", self.selected_tower.name, "is selected")
                             else:
                                 tw.selected = False
 
@@ -225,12 +255,6 @@ class Game:
                         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
                             break
 
-                # Loop through enemies
-                # to_del = []
-                # for en in self.enemys:
-                #     en.move(dt)
-                #     if en.y < -25:
-                #         to_del.append(en)
                 to_del = []
                 for en in self.enemys:
                     en.move(dt)
@@ -259,6 +283,14 @@ class Game:
     def draw(self, dt):
         self.win.blit(self.bg, (0,0)) # BG
         
+        #draw placement rings
+        if self.moving_object:
+            for tower in self.towers:
+                tower.draw_placement(self.win)
+
+            self.moving_object.draw_placement(self.win)
+
+            
         #Used to get the position for enemy pathway
         for p in self.clicks:
              pygame.draw.circle(self.win, (255,0,0), (p[0], p[1]), 5, 0)

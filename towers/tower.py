@@ -28,7 +28,6 @@ class Tower:
 
         # menu 
         self.selected = False
-
         # sprite images
         self.tower_img = []
         self.tower_count = 1
@@ -41,6 +40,9 @@ class Tower:
         self.hit_timer = time.time()
         self.att_speed = 1
         self.inRange = False
+
+        # placement
+        self.place_color = (0,0,255, 100)
 
     def get_upgrade_cost(self): # Get upgrade cost
         return self.menu.get_item_cost()
@@ -74,6 +76,11 @@ class Tower:
             pygame.draw.circle(surface, (128, 128, 128, 100), (self.range, self.range), self.range, 0)
             
             win.blit(surface, (self.x - self.range, self.y - self.range))
+
+    def draw_placement(self, win):  # draw range circle
+        surface = pygame.Surface((self.range * 2, self.range * 2), pygame.SRCALPHA, 32)
+        pygame.draw.circle(surface, self.place_color, (32,32), 32, 0)
+        win.blit(surface, (self.x - 32, self.y - 32))
 
     def click(self, X, Y): # Returns if tower has been clicked on
         img = self.tower_imgs[self.level - 1]
@@ -128,3 +135,13 @@ class Tower:
                         money = first_enemy.money * 2
                         enemies.remove(first_enemy) # remove enemy off screen when hp <= 0
         return money
+
+    def collide(self, otherTower):
+            x2 = otherTower.x
+            y2 = otherTower.y
+
+            dis = math.sqrt((x2 - self.x)**2 + (y2 - self.y)**2)
+            if dis >= 100:
+                return False
+            else:
+                return True

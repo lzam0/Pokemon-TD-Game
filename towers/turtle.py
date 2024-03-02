@@ -22,7 +22,7 @@ class TurtleTower(Tower):
 		self.att_speed = 0.4
 		self.tower_imgs = tower_imgs[:2]
 
-		self.menu = Menu(self, 25, 300, menu_bg, [200,800, 1200, 3300, "FULLY EVOLVED"]) # buy price | 2nd upgrade | max upgrade
+		self.menu = Menu(self, 25, 300, menu_bg, [800, 1200, 3300, "FULLY EVOLVED"]) # buy price | 2nd upgrade | max upgrade
 		self.menu.add_btn(upgrade_btn, "Upgrade")
 
 	def upgrade(self):
