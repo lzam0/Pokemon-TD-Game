@@ -3,14 +3,14 @@ import os
 from .tower import Tower
 from menu.menu import Menu
 
-menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
-upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "upgrade.png")), (50, 50))
-
 # load penguin images
 tower_imgs = []
-for x in range(5):
+for x in range(6):
 	add_str = str(x)
 	tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/base", "penguin_"+add_str+".png")),(64,64)))
+
+menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "upgrade.png")), (50, 50))
 
 class PenguinTower(Tower):
 	
@@ -23,7 +23,7 @@ class PenguinTower(Tower):
 		self.tower_imgs = tower_imgs[:2] # Set initial tower images to penguin_0 and penguin_1
 
 		# money
-		self.menu = Menu(self, 25, 300, menu_bg, [400, 1600, 4000, "FULLY EVOLVED"])  # buy price | 2nd upgrade | max upgrade
+		self.menu = Menu(self, 25, 300, menu_bg, [1200, 2900, "FULLY EVOLVED"])  # buy price | 2nd upgrade | max upgrade
 		self.menu.add_btn(upgrade_btn, "Upgrade")
 
 	def upgrade(self):
@@ -42,3 +42,6 @@ class PenguinTower(Tower):
 				
 			# Ensure tower image is reset to the first image after upgrade
 			self.tower_count = 0
+			
+	def get_upgrade_cost(self):
+		return self.menu.get_item_cost()

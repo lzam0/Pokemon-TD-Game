@@ -3,14 +3,14 @@ import os
 from .tower import Tower
 from menu.menu import Menu
 
-menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
-upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "upgrade.png")), (50, 50))
-
 # Load all monkey images at once
 tower_imgs = []
 for i in range(6):
     add_str = str(i)
     tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/base", "monkey_" + add_str + ".png")),(64, 64)))
+
+menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "upgrade.png")), (50, 50))
 
 class MonkeyTower(Tower):
     
@@ -24,7 +24,7 @@ class MonkeyTower(Tower):
         self.tower_imgs = tower_imgs[:2]  # Set initial tower images to monkey_0 and monkey_1
 
         # Money
-        self.menu = Menu(self, 25, 300, menu_bg, [600, 1500, 3800, "FULLY EVOLVED"])  # Buy price | 2nd upgrade | max upgrade
+        self.menu = Menu(self, 25, 300, menu_bg, [1400, 2600, "FULLY EVOLVED"])  # Buy price | 2nd upgrade | max upgrade
         self.menu.add_btn(upgrade_btn, "Upgrade")
 
     def upgrade(self):
@@ -42,3 +42,6 @@ class MonkeyTower(Tower):
                 self.name = "Infernape"
             # Ensure tower image is reset to the first image after upgrade
             self.tower_count = 0
+
+    def get_upgrade_cost(self):
+        return self.menu.get_item_cost()

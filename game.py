@@ -221,15 +221,18 @@ class Game:
                             if btn_clicked:
                                 if btn_clicked == "Upgrade": # purchase an upgrade
                                     cost = self.selected_tower.get_upgrade_cost()
+                                    print("Current Money:", self.money)  # Debug print
+                                    print("Upgrade Cost:", cost)  # Debug print
 
-                                    if self.money >= cost:
+                                    if self.money >= int(cost):
                                         self.money -= cost # deduct money for upgrade
+                                        print("Money After Upgrade:", self.money)  # Debug print
+
                                         print("Tower Upgraded | Level:", self.selected_tower.level)
-                                        print("Upgrade Cost:", cost) # somehow charges player 500??? need to fix should be the next value 
                                         self.selected_tower.upgrade() # upgrade tower 
                                     else:
                                         print("Upgrade Declined")
-                                        print("Balance Insufficent...")
+                                        print("Balance Insufficient...")
 
                             if not(btn_clicked):
                                 for tw in self.towers:
@@ -238,7 +241,6 @@ class Game:
                                         self.selected_tower = tw
                                     else:
                                         tw.selected = False
-
                         # tower clicked
                         for tw in self.towers:
                             if tw.click(pos[0], pos[1]):

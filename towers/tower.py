@@ -44,9 +44,6 @@ class Tower:
         # placement
         self.place_color = (0,0,255, 100)
 
-    def get_upgrade_cost(self): # Get upgrade cost
-        return self.menu.get_item_cost()
-
 
     def draw(self, win): #Draws Tower with given images
 
@@ -83,9 +80,13 @@ class Tower:
         win.blit(surface, (self.x - 32, self.y - 32))
 
     def click(self, X, Y): # Returns if tower has been clicked on
-        img = self.tower_imgs[self.level - 1]
-        if X <= self.x - img.get_width()//2 + self.width and X >= self.x - img.get_width()//2:
-            if Y <= self.y + self.height - img.get_height()//2 and Y >= self.y - img.get_height()//2:
+        if self.level <= len(self.tower_imgs):
+            img = self.tower_imgs[self.level - 1]
+        else:
+            img = self.tower_imgs[-1]  # Use the last tower image if level exceeds available images
+
+        if X <= self.x - img.get_width() // 2 + self.width and X >= self.x - img.get_width() // 2:
+            if Y <= self.y + self.height - img.get_height() // 2 and Y >= self.y - img.get_height() // 2:
                 return True
         return False
 
@@ -98,7 +99,11 @@ class Tower:
             self.damage += self.damage * 2
 
     def get_upgrade_cost(self): # return the upgrade cost, if 0 then can't upgrade anymore
-        return self.price[self.level-1]
+        # Check if the tower can be upgraded further
+        if self.level < len(self.price):
+            return self.price[self.level - 1]  # Return the upgrade cost for the current level
+        else:
+            return 0  # Return 0 if the tower is already at max level
 
     def move(self, x, y): # moving enemy tower
         self.x = x
