@@ -7,10 +7,10 @@ from menu.menu import Menu
 tower_imgs = []
 for x in range(6):
 	add_str = str(x)
-	tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/base", "penguin_"+add_str+".png")),(64,64)))
+	tower_imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/tower/base", "penguin_"+add_str+".png")),(64,64)))
 
-menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
-upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "upgrade.png")), (50, 50))
+menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "menu.png")), (175, 250))
+upgrade_btn = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "upgrade.png")), (50, 50))
 
 class PenguinTower(Tower):
 	

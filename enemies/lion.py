@@ -6,7 +6,7 @@ from .enemy import Enemy
 imgs = []
 for x in range(2):
     add_str = str(x)    
-    imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assests/enemies", "lion_"+add_str+".png")),(64,64)))
+    imgs.append(pygame.transform.scale(pygame.image.load(os.path.join("game_assets/enemies", "lion_"+add_str+".png")),(64,64)))
 
 class Lion(Enemy):
 

@@ -1,8 +1,8 @@
 import pygame, os
 from settings import *
 
-pokecash = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "pokecash.png")), (50, 50))
-buy_pokecash = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "pokecash.png")), (25, 25))
+pokecash = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "pokecash.png")), (50, 50))
+buy_pokecash = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "pokecash.png")), (25, 25))
 
 class Button:
 	def __init__(self, menu, img, name):

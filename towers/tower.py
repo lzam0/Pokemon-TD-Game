@@ -2,7 +2,7 @@ import pygame, os, math, time
 
 from menu.menu import Menu
 
-menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (175, 250))
+menu_bg = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "menu.png")), (175, 250))
 
 class Tower:
     """

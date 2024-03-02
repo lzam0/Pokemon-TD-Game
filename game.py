@@ -24,17 +24,19 @@ from menu.menu import VerticalMenu
 # Tower Name
 tower_name = ["Chimchar", "Piplup", "Turtwig"]
 
+music = os.path.join("game_assets", "music.mp3")
+
 # Game Atribute Images
-lives_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "heart.png")), (50, 50))
-money_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "pokecash.png")), (50, 50))
+lives_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "heart.png")), (50, 50))
+money_img = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "pokecash.png")), (50, 50))
 
 # Vertical Buy Menu
-vert_menu = pygame.transform.scale(pygame.image.load(os.path.join("game_assests", "menu.png")), (150, 350))
+vert_menu = pygame.transform.scale(pygame.image.load(os.path.join("game_assets", "menu.png")), (150, 350))
 
 # Tower Buy Images
-monkey = pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/icon", "monkey.png")),(64,64))
-penguin = pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/icon", "penguin.png")),(64,64))
-turtle = pygame.transform.scale(pygame.image.load(os.path.join("game_assests/tower/icon", "turtle.png")),(64,64))
+monkey = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/tower/icon", "monkey.png")),(64,64))
+penguin = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/tower/icon", "penguin.png")),(64,64))
+turtle = pygame.transform.scale(pygame.image.load(os.path.join("game_assets/tower/icon", "turtle.png")),(64,64))
 
 
 
@@ -104,7 +106,7 @@ class Game:
         self.money = 10000
 
         # Background
-        self.img = pygame.image.load(os.path.join("game_assests","bg.png"))
+        self.img = pygame.image.load(os.path.join("game_assets","bg.png"))
         self.bg = pygame.transform.scale(self.img, (self.width, self.height)) # change this for actual bg
         self.clicks = [] # used to get positions of the enemy pathway
 
@@ -146,7 +148,6 @@ class Game:
         run = True
         while run:
             dt = fps.tick(FPS) / 1000.0  # Convert milliseconds to seconds and get delta time
-
             # Generate Enemies
             if self.pause != False:
                 spawn_time = random.uniform(0.75, 5)

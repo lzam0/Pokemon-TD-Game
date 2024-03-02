@@ -4,7 +4,7 @@ from .enemy import Enemy
 #import enemy_sprites
 
 # Preload images
-bird_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("game_assests/enemies", f"bird_{x}.png")),(64,64)) for x in range(2)]
+bird_imgs = [pygame.transform.scale(pygame.image.load(os.path.join("game_assets/enemies", f"bird_{x}.png")),(64,64)) for x in range(2)]
 
 class Bird(Enemy):
     # Class attribute for images
