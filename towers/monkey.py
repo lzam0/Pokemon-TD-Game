@@ -28,7 +28,7 @@ class MonkeyTower(Tower):
         self.menu.add_btn(upgrade_btn, "Upgrade")
 
     def upgrade(self):
-        if self.level < 2:  # Allow two upgrades
+        if self.level < 3:  # Allow two upgrades
             self.level += 1
             self.damage *= 2  # Double the damage
             # Set tower images based on the current level
