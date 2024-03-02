@@ -21,3 +21,11 @@ User Interface: Enjoy a user-friendly interface that provides essential informat
 
 Sprites are from the original generation 4 game
 Map was designed by me
+
+Some features I can include/ fix in the future is:
+- Music
+- Pause Button (on screen)
+- More tower placement restrictions - eg path and inside of the tree border
+- Projectiles (probably wont add)
+- Fix the delta time of the enemy movement (stutters currently unsure of the reason)
+- Sell tower option
